@@ -22,27 +22,27 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //variable added to clarify direction the turning method would act
+        boolean turningRight = true;
+
         if(e.getKeyCode() == KeyEvent.VK_A) {
-            for (int x = 0; x < mD.getpD().getBlocks().length; x++) {
-                mD.getpD().getBlocks()[x].moveLeft();
-                mD.repaint();
+            for (int x = 0; x < mD.getPieceDrawer().getBlocks().length; x++) {
+                mD.getPieceDrawer().getBlocks()[x].moveLeft();
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
-            for(int x=0; x < mD.getpD().getBlocks().length; x++ ){
-                mD.getpD().getBlocks()[x].moveRight();
-                mD.repaint();
+            for(int x=0; x < mD.getPieceDrawer().getBlocks().length; x++ ){
+                mD.getPieceDrawer().getBlocks()[x].moveRight();
             }
         }
         if(e.getKeyCode()==KeyEvent.VK_E){
-            p.turnPiece(true);
-            mD.repaint();
+            p.turnPiece(turningRight);
         }
         if(e.getKeyCode()==KeyEvent.VK_Q){
-            p.turnPiece(false);
-            mD.repaint();
+            p.turnPiece(!turningRight);
         }
 
+        mD.repaint();
     }
 
 

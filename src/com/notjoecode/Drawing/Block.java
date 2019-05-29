@@ -25,6 +25,7 @@ public class Block extends JPanel {
         super.paintComponent(g);
 
         positionConverter();
+
         g.setColor(Color.GRAY);
         g.fillRect(temp[0], temp[1], size, size);
         g.setColor(Color.BLACK);

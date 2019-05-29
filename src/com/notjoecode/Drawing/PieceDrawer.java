@@ -24,6 +24,7 @@ public class PieceDrawer extends JPanel{
 
     @Override
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         int x = 0;
         while( x < blocks.length){
             blocks[x].paintComponent(g);
