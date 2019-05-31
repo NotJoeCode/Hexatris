@@ -6,20 +6,24 @@ import java.util.Random;
 
 public class Piece {
 
-    boolean turned;
+    //added for rotation methods
+    private boolean[][] finalPiecePos;
 
     private Block[] blocks = new Block[6];
     private Block[] nextBlocks = new Block[6];
 
     private BitSet[] bitSets = { new BitSet(6), new BitSet(5), new BitSet(4)};
-    private boolean[][] currentBlockPositions = new boolean[6][3], nextBlockPositions = new boolean[6][3];
+    private boolean[][] currentBlockPositions = new boolean[6][6], nextBlockPositions = new boolean[6][6];
     private Random random = new Random();
     private int thisPiece = random.nextInt(35);
     private int nextPiece = random.nextInt(35);
 
     public Piece(){
         setArray(thisPiece, currentBlockPositions);
+        //for testing purposes
+        //currentBlockPositions = turnPiece(currentBlockPositions);
         setArray(nextPiece, nextBlockPositions);
+        resizeArray(currentBlockPositions);
 
     }
 
@@ -39,6 +43,9 @@ public class Piece {
                     else if(!array[5][0]) {
                         positionX += 1;
                     }
+                    //added 10 for testing
+                    //blocks[z] = new Block(positionX,y+10);
+                    //functional code
                     blocks[z] = new Block(positionX,y);
                     z++;
                 }
@@ -132,7 +139,6 @@ public class Piece {
                     break;
         }
     }
-
     private void setArrayTwo(int x, boolean[][] blockPositions){
         switch (x){
             case 1: case 10:
@@ -216,7 +222,6 @@ public class Piece {
         }
 
     }
-
     private void setArrayThree(int x, boolean[][] blockPositions){
         switch (x){
             case 9: case 17: case 22: case 23: case 30: case 34:
@@ -252,41 +257,89 @@ public class Piece {
 
     }
 
-    public void turnPiece(boolean b){
-        float[] temp;
-        int x = 2, y = 0;
-        switch (thisPiece) {
-            case 5: case 10: case 15: case 16:
+    private void resizeArray(boolean[][] array) {
+        boolean[][] temp;
+        if (!array[3][2] && !array[3][1] && !array[3][0]) {
+            temp = new boolean[3][3];
+            int x = 0, y = 0;
+            while (y < temp.length) {
+                while (x < temp[y].length) {
+                    temp[y][x] = array[y][x];
+                    x++;
+                }
                 x = 0;
-                break;
-            case 9:
-                x = 1;
-                break;
-            case 21: case 22: case 26:
-                x = 3;
-                break;
-            default:
-                break;
-        }
-        temp = blocks[x].getPosition();
-        if((b && !turned)||(!b && turned)){
-            while(y < blocks.length){
-                float xPos = temp[0] + (temp[1] - blocks[y].getPosition()[1]);
-                float yPos = temp[1] + (temp[0] - blocks[y].getPosition()[0]);
-                blocks[y].setPosition(new float[] {xPos, yPos});
+                y++;
+            }
+        } else if (!array[4][0] && !array[4][1]) {
+            temp = new boolean[4][4];
+            int x = 0, y = 0;
+            while (y < temp.length) {
+                while (x + 1 < temp[y].length) {
+                    temp[y][x + 1] = array[y][x];
+                    x++;
+                }
+                x = 0;
+                y++;
+            }
+        } else if (!array[5][0]) {
+            temp = new boolean[5][5];
+            int x = 0, y = 0;
+            while (y < temp.length) {
+                while (x + 2 < temp[y].length) {
+                    temp[y][x + 2] = array[y][x];
+                    x++;
+                }
+                x = 0;
+                y++;
+            }
+        } else {
+            temp = new boolean[6][6];
+            int x = 0, y = 0;
+            while (y < temp.length) {
+                while (x + 2 < temp[y].length) {
+                    temp[y][x + 2] = array[y][x];
+                    x++;
+                }
+                x = 0;
                 y++;
             }
         }
-        else {
-            while(y < blocks.length){
-                float xPos = temp[0] + (blocks[y].getPosition()[1] - temp[1]);
-                float yPos = temp[1] + (blocks[y].getPosition()[0] - temp[0]);
-                blocks[y].setPosition(new float[] {xPos, yPos});
-                y++;
-            }
-        }
-        turned = !turned;
+        finalPiecePos = temp;
+    }
 
+    public void rotate(boolean[][] test) {
+
+        boolean[][] temp = new boolean[test.length][test.length];
+        for(int x = 0; x < temp.length; x++){
+            if (temp[x].length >= 0) System.arraycopy(test[x], 0, temp[x], 0, temp[x].length);
+        }
+
+        for(int x = 0; x < temp.length; x++) {
+            for (int y = 0, z = temp.length - 1; y < temp[x].length; y++, z--) {
+                finalPiecePos[z][x] = temp[x][y];
+            }
+        }
+
+    }
+
+    public void reverseRotate(boolean[][] test){
+
+        boolean[][] temp = new boolean[test.length][test.length];
+        for(int x = 0; x < temp.length; x++){
+            if (temp[x].length >= 0) System.arraycopy(test[x], 0, temp[x], 0, temp[x].length);
+        }
+
+        for(int x = 0, z = temp.length - 1; x < temp.length; x++, z--) {
+            for (int y = 0; y < temp[x].length; y++) {
+                finalPiecePos[y][z] = temp[x][y];
+            }
+        }
+
+    }
+
+
+    //take the finalPiecePos and place it
+    public void updateBlockPositions(){
 
     }
 
@@ -299,4 +352,5 @@ public class Piece {
     public void setNextPiece(){nextPiece = random.nextInt(35);}
     public Block[] getBlocks(){return blocks;}
     public Block[] getNextBlocks(){return nextBlocks;}
+    public boolean[][] getFinalPiecePos() { return finalPiecePos;}
 }

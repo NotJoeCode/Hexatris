@@ -12,11 +12,13 @@ public class MasterDrawer extends JPanel{
     private Timer timer = new Timer();
     private Board b;
     private PieceDrawer pD;
+    //to set position post rotation
+    private int clicks;
 
     public MasterDrawer(int height, Piece p){
         //drawing the grid and the next box
         this.b = new Board(height);
-        //creates the visual representation of the Piece class logic
+        //displays Pieces
         this.pD = new PieceDrawer(p);
         start();
     }
@@ -27,6 +29,10 @@ public class MasterDrawer extends JPanel{
         super.paintComponent(g);
         b.paintComponent(g);
         pD.paintComponent(g);
+        //testing for rotations
+        //g.drawRect(Board.boxSize*6,Board.boxSize*9,Board.boxSize*6,Board.boxSize*6);
+        //g.fillRect(Board.boxSize*9 -5, Board.boxSize*12-5,10,10);
+        //
     }
 
     //GameLoop
@@ -38,6 +44,7 @@ public class MasterDrawer extends JPanel{
                 pD.getBlocks()[x].update();
                 x++;
             }
+            clicks++;
             repaint();
         }
     };

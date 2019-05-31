@@ -22,8 +22,6 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //variable added to clarify direction the turning method would act
-        boolean turningRight = true;
 
         if(e.getKeyCode() == KeyEvent.VK_A) {
             for (int x = 0; x < mD.getPieceDrawer().getBlocks().length; x++) {
@@ -36,10 +34,16 @@ public class Game extends JFrame implements KeyListener {
             }
         }
         if(e.getKeyCode()==KeyEvent.VK_E){
-            p.turnPiece(turningRight);
+            //rotate piece clockwise
+            p.rotate(p.getBlockPositions());
+            mD.getPieceDrawer().resetPiecePos(p);
+
         }
         if(e.getKeyCode()==KeyEvent.VK_Q){
-            p.turnPiece(!turningRight);
+            //rotate counterclockwise
+            p.reverseRotate(p.getBlockPositions());
+            mD.getPieceDrawer().resetPiecePos(p);
+
         }
 
         mD.repaint();
