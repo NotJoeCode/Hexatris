@@ -58,5 +58,5 @@ public class MasterDrawer extends JPanel{
         return b;
     }
     public PieceDrawer getPieceDrawer() {return pD;}
-
+    public int getClicks() { return clicks;}
 }

@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class Block extends JPanel {
     private int size = Board.boxSize;
-
     private float[] position = new float[2];
     private int[] temp = new int[2];
 

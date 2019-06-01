@@ -9,14 +9,14 @@ public class Piece {
     //added for rotation methods
     private boolean[][] finalPiecePos;
 
-    private Block[] blocks = new Block[6];
-    private Block[] nextBlocks = new Block[6];
+    private Block[] blocks = new Block[6],  nextBlocks = new Block[6];
 
-    private BitSet[] bitSets = { new BitSet(6), new BitSet(5), new BitSet(4)};
     private boolean[][] currentBlockPositions = new boolean[6][6], nextBlockPositions = new boolean[6][6];
     private Random random = new Random();
     private int thisPiece = random.nextInt(35);
     private int nextPiece = random.nextInt(35);
+
+    private BitSet[] bitSets = { new BitSet(6), new BitSet(5), new BitSet(4)};
 
     public Piece(){
         setArray(thisPiece, currentBlockPositions);
@@ -27,34 +27,6 @@ public class Piece {
 
     }
 
-    public void drawPiece(boolean[][] array){
-        int x = 0, y = 0, z = 0;
-        while(x < array.length){
-            while(y < array[x].length){
-
-                if(array[x][y]){
-                    int positionX = x+4;
-                    if(!array[3][2] && !array[3][1] && !array[3][0]) {
-                        positionX += 2;
-                    }
-                    else if(!array[4][0] && ! array[4][1]){
-                        positionX += 2;
-                    }
-                    else if(!array[5][0]) {
-                        positionX += 1;
-                    }
-                    //added 10 for testing
-                    //blocks[z] = new Block(positionX,y+10);
-                    //functional code
-                    blocks[z] = new Block(positionX,y);
-                    z++;
-                }
-                y++;
-            }
-            y = 0;
-            x++;
-        }
-    }
 
     public void drawNextPiece(boolean[][] array){
         int x = 0, y = 0, z = 0;

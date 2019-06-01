@@ -10,6 +10,7 @@ public class Game extends JFrame implements KeyListener {
     private int height = Toolkit.getDefaultToolkit().getScreenSize().height;
     private Piece p = new Piece();
     private MasterDrawer mD = new MasterDrawer(height, p);
+    private int xPos = 0;
 
     public Game(){
         this.setTitle("HEXATRIS");
@@ -23,25 +24,32 @@ public class Game extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if(e.getKeyCode() == KeyEvent.VK_A) {
+        if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
             for (int x = 0; x < mD.getPieceDrawer().getBlocks().length; x++) {
                 mD.getPieceDrawer().getBlocks()[x].moveLeft();
             }
+            xPos--;
         }
-        if(e.getKeyCode() == KeyEvent.VK_D){
+        if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT){
             for(int x=0; x < mD.getPieceDrawer().getBlocks().length; x++ ){
                 mD.getPieceDrawer().getBlocks()[x].moveRight();
+
             }
+            xPos++;
         }
         if(e.getKeyCode()==KeyEvent.VK_E){
             //rotate piece clockwise
-            p.rotate(p.getBlockPositions());
+            p.rotate(p.getFinalPiecePos());
+            mD.getPieceDrawer().setClicks(mD.getClicks());
+            mD.getPieceDrawer().setXPos(xPos);
             mD.getPieceDrawer().resetPiecePos(p);
 
         }
         if(e.getKeyCode()==KeyEvent.VK_Q){
             //rotate counterclockwise
-            p.reverseRotate(p.getBlockPositions());
+            p.reverseRotate(p.getFinalPiecePos());
+            mD.getPieceDrawer().setClicks(mD.getClicks());
+            mD.getPieceDrawer().setXPos(xPos);
             mD.getPieceDrawer().resetPiecePos(p);
 
         }
