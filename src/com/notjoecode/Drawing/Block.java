@@ -19,17 +19,22 @@ public class Block extends JPanel {
         this.position[1] = (float) y;
     }
 
+    public void moveRight(){
+        position[0]++;
+    }
+    public void moveLeft(){ position[0]--; }
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        positionConverter();
-
-        g.setColor(Color.GRAY);
-        g.fillRect(temp[0], temp[1], size, size);
-        g.setColor(Color.BLACK);
-        g.drawRect(temp[0], temp[1], size, size);
-
+        //only paint blocks if they are within the board vertically
+        if(this.position[1] >= 0){
+            positionConverter();
+            g.setColor(Color.GRAY);
+            g.fillRect(temp[0], temp[1], size, size);
+            g.setColor(Color.BLACK);
+            g.drawRect(temp[0], temp[1], size, size);
+        }
     }
 
     private void positionConverter(){
@@ -43,10 +48,9 @@ public class Block extends JPanel {
     public void update(){
         position[1]++;
     }
-    public void moveRight(){ position[0]++; }
-    public void moveLeft(){ position[0]--; }
+
     public float[] getPosition(){return position;}
-    public void setPosition(float[] f){position = f;}
+//    public void setPosition(float[] f){position = f;}
 
 
 }

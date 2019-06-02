@@ -13,15 +13,14 @@ public class PieceDrawer extends JPanel{
     //for correct x after rotation
     private int xPos;
 
-    private Block[] blocks;
-    private Block[] nextBlocks;
-    private int thisPiece;
+
+    private boolean breaker = false;
+
+    private Block[] blocks, nextBlocks, oldB;
 
     public PieceDrawer(Piece p){
-        blocks = p.getBlocks();
+        blocks = new Block[6];
         nextBlocks = p.getNextBlocks();
-        thisPiece = p.getThisPiece();
-        //drawPiece(p.getBlockPositions());
         drawPiece(p.getFinalPiecePos(), 0, 0);
         p.drawNextPiece(p.getNextBlockPositions());
         //for rotations
@@ -29,9 +28,8 @@ public class PieceDrawer extends JPanel{
 
     }
 
-
     private void drawPiece(boolean[][] array, int clicks, int xPos){
-        int x = 0, y = 0, z = 0;
+        int x = 0, y = 0, z = 0, offset=-2;
         while(x < array.length){
             while(y < array[x].length){
 
@@ -40,30 +38,37 @@ public class PieceDrawer extends JPanel{
                     //if(!array[3][2] && !array[3][1] && !array[3][0]) {
                     if(array.length == 3){
                         positionX += 2;
+                        offset = 0;
                     }
                     //else if(!array[4][0] && ! array[4][1]){
                     else if(array.length == 4){
                         positionX += 2;
+                        offset = -1;
                     }
                     //else if(!array[5][0]) {
-                    else if(array.length == 5){
+                    else {
                         positionX += 1;
                     }
                     //added 10 for testing
                     //blocks[z] = new Block(positionX,y+10);
                     //functional code
-                    blocks[z] = new Block(positionX + xPos,y-1 + clicks);
+                    blocks[z] = new Block(positionX + xPos,y+offset + clicks);
+
+                    //prevent turning off the screen
+                    if(blocks[z].getPosition()[0] < 0 || blocks[z].getPosition()[0] > 14){
+                        blocks = oldB;
+                        this.breaker = true;
+                        break;
+                    }
                     z++;
                 }
                 y++;
             }
+            if(this.breaker) break;
             y = 0;
             x++;
         }
     }
-
-
-
 
     @Override
     public void paintComponent(Graphics g){
@@ -78,30 +83,28 @@ public class PieceDrawer extends JPanel{
             nextBlocks[y].paintComponent(g);
             y++;
         }
-
-//for rotations :: reference
-//        for(int x = 0; x < b.length; x++){
-//            for(int y = 0; y< b[x].length; y++){
-//                if(b[x][y]){
-//                    g.setColor(Color.GRAY);
-//                    g.fillRect(blockSize*(x+2),blockSize*(y+2),blockSize,blockSize);
-//                }
-//
-//                g.setColor(Color.BLACK);
-//                g.drawRect(blockSize*(x+2),blockSize*(y+2),blockSize,blockSize);
-//            }
-//        }
     }
 
     //for rotation
     public void resetPiecePos(Piece p){
+        oldB = new Block[blocks.length];
+        System.arraycopy(blocks,0,oldB,0,oldB.length);
+        boolean[][] temp = new boolean[b.length][b.length];
+        for(int x = 0; x < temp.length; x++){
+            if (temp[x].length >= 0) System.arraycopy(b[x], 0, temp[x], 0, temp[x].length);
+        }
+
         b = p.getFinalPiecePos();
         drawPiece(b, clicks, xPos);
+        if(this.breaker){
+            p.setFinalPiecePos(temp);
+            breaker = false;
+
+        }
         this.repaint();
     }
 
     public Block[] getBlocks(){ return blocks; }
-    public int getThisPiece(){return thisPiece; }
     public void setClicks(int clicks){this.clicks = clicks;}
 
     public void setXPos(int xPos) { this.xPos = xPos; }

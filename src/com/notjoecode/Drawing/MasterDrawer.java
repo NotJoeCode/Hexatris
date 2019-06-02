@@ -20,7 +20,6 @@ public class MasterDrawer extends JPanel{
         this.b = new Board(height);
         //displays Pieces
         this.pD = new PieceDrawer(p);
-        start();
     }
 
 
@@ -48,7 +47,7 @@ public class MasterDrawer extends JPanel{
             repaint();
         }
     };
-    private void start(){
+    public void start(){
         timer.scheduleAtFixedRate(t, 1000,1000);
     }
 
@@ -59,4 +58,5 @@ public class MasterDrawer extends JPanel{
     }
     public PieceDrawer getPieceDrawer() {return pD;}
     public int getClicks() { return clicks;}
+    public void setClicks(int i) { this.clicks = i; }
 }

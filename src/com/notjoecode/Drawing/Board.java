@@ -5,11 +5,12 @@ import java.awt.*;
 
 public class Board extends JPanel {
     public static int boxSize;
-    private int height, width, nextBoxHeight, nextBoxWidth, nextBoxPosition;
+    private int width, nextBoxHeight, nextBoxWidth, nextBoxPosition;
+    //private int height;
 
     public Board(int height){
 
-        this.height = height;
+        //this.height = height;
         boxSize = height/30;
         nextBoxHeight = boxSize * 4;
         nextBoxWidth = boxSize * 6;

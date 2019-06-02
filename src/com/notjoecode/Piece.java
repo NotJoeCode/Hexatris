@@ -9,7 +9,8 @@ public class Piece {
     //added for rotation methods
     private boolean[][] finalPiecePos;
 
-    private Block[] blocks = new Block[6],  nextBlocks = new Block[6];
+    //private Block[] blocks = new Block[6],
+    private Block[] nextBlocks = new Block[6];
 
     private boolean[][] currentBlockPositions = new boolean[6][6], nextBlockPositions = new boolean[6][6];
     private Random random = new Random();
@@ -22,6 +23,15 @@ public class Piece {
         setArray(thisPiece, currentBlockPositions);
         //for testing purposes
         //currentBlockPositions = turnPiece(currentBlockPositions);
+        setArray(nextPiece, nextBlockPositions);
+        resizeArray(currentBlockPositions);
+
+    }
+
+    //Piece testing
+    public Piece(int x){
+        thisPiece = x;
+        setArray(thisPiece,currentBlockPositions);
         setArray(nextPiece, nextBlockPositions);
         resizeArray(currentBlockPositions);
 
@@ -59,8 +69,6 @@ public class Piece {
         setArrayTwo(x, blockPositions);
         setArrayThree(x, blockPositions);
     }
-
-
     private void setArrayOne(int x, boolean[][] blockPositions){
         switch (x){
             case 0:
@@ -107,8 +115,8 @@ public class Piece {
                 blockPositions[1][0] = true;
                 break;
 
-                default:
-                    break;
+            default:
+                break;
         }
     }
     private void setArrayTwo(int x, boolean[][] blockPositions){
@@ -228,7 +236,6 @@ public class Piece {
         }
 
     }
-
     private void resizeArray(boolean[][] array) {
         boolean[][] temp;
         if (!array[3][2] && !array[3][1] && !array[3][0]) {
@@ -279,6 +286,9 @@ public class Piece {
         finalPiecePos = temp;
     }
 
+
+
+
     public void rotate(boolean[][] test) {
 
         boolean[][] temp = new boolean[test.length][test.length];
@@ -309,20 +319,14 @@ public class Piece {
 
     }
 
-
-    //take the finalPiecePos and place it
-    public void updateBlockPositions(){
-
-    }
-
-
     public boolean[][] getBlockPositions() { return currentBlockPositions; }
     public boolean[][] getNextBlockPositions() { return nextBlockPositions; }
-    public int getThisPiece(){ return thisPiece; }
-    public void setThisPiece(){ thisPiece = nextPiece; }
-    public int getNextPiece(){ return nextPiece; }
-    public void setNextPiece(){nextPiece = random.nextInt(35);}
-    public Block[] getBlocks(){return blocks;}
+//    public int getThisPiece(){ return thisPiece; }
+//    public void setThisPiece(){ thisPiece = nextPiece; }
+//    public int getNextPiece(){ return nextPiece; }
+//    public void setNextPiece(){nextPiece = random.nextInt(35);}
+    //public Block[] getBlocks(){return blocks;}
     public Block[] getNextBlocks(){return nextBlocks;}
     public boolean[][] getFinalPiecePos() { return finalPiecePos;}
+    public void setFinalPiecePos(boolean[][] temp) { finalPiecePos = temp; }
 }
