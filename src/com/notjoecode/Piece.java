@@ -8,6 +8,7 @@ public class Piece {
 
     //added for rotation methods
     private boolean[][] finalPiecePos;
+    boolean[][] temp;
 
     private boolean[][] currentBlockPositions = new boolean[6][6], nextBlockPositions = new boolean[6][6];
     private Random random = new Random();
@@ -262,7 +263,7 @@ public class Piece {
 
     public void rotate(boolean[][] test) {
 
-        boolean[][] temp = new boolean[test.length][test.length];
+        temp = new boolean[test.length][test.length];
         for(int x = 0; x < temp.length; x++){
             if (temp[x].length >= 0) System.arraycopy(test[x], 0, temp[x], 0, temp[x].length);
         }
@@ -277,7 +278,7 @@ public class Piece {
 
     public void reverseRotate(boolean[][] test){
 
-        boolean[][] temp = new boolean[test.length][test.length];
+        temp = new boolean[test.length][test.length];
         for(int x = 0; x < temp.length; x++){
             if (temp[x].length >= 0) System.arraycopy(test[x], 0, temp[x], 0, temp[x].length);
         }

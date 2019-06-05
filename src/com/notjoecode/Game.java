@@ -73,6 +73,16 @@ public class Game extends JFrame implements KeyListener {
             mD.getPieceDrawer().setXPos(xPos);
             mD.getPieceDrawer().resetPiecePos(p);
 
+            if(mD.getPieceDrawer().getTurnFailed()){
+                p.reverseRotate(p.getFinalPiecePos());
+                mD.getPieceDrawer().setClicks(mD.getClicks());
+                mD.getPieceDrawer().setXPos(xPos);
+                mD.getPieceDrawer().resetPiecePos(p);
+                mD.getPieceDrawer().setTurnFailed();
+            }
+
+
+
         }
         //turn piece anticlockwise
         if(e.getKeyCode()==KeyEvent.VK_Q){
@@ -81,6 +91,14 @@ public class Game extends JFrame implements KeyListener {
             mD.getPieceDrawer().setClicks(mD.getClicks());
             mD.getPieceDrawer().setXPos(xPos);
             mD.getPieceDrawer().resetPiecePos(p);
+
+            if(mD.getPieceDrawer().getTurnFailed()) {
+                p.rotate(p.getFinalPiecePos());
+                mD.getPieceDrawer().setClicks(mD.getClicks());
+                mD.getPieceDrawer().setXPos(xPos);
+                mD.getPieceDrawer().resetPiecePos(p);
+                mD.getPieceDrawer().setTurnFailed();
+            }
 
         }
 

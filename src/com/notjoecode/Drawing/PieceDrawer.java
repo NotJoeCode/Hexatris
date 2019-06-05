@@ -15,6 +15,7 @@ public class PieceDrawer extends JPanel{
 
 
     private boolean breaker = false;
+    private boolean turnFailed = false;
 
     private Block[] blocks, nextBlocks, oldB;
 
@@ -57,9 +58,10 @@ public class PieceDrawer extends JPanel{
 
                     //prevent turning off the screen
                     if(blocks[z].getPosition()[0] < 0 || blocks[z].getPosition()[0] > 14){
-                        blocks = oldB;
-                        this.breaker = true;
-                        break;
+//                        blocks = oldB;
+//                        this.breaker = true;
+                        this.turnFailed = true;
+//                        break;
                     }
                     z++;
                 }
@@ -113,17 +115,17 @@ public class PieceDrawer extends JPanel{
 
     //for rotation
     public void resetPiecePos(Piece p){
-        oldB = new Block[blocks.length];
-        System.arraycopy(blocks,0,oldB,0,oldB.length);
-        boolean[][] temp = new boolean[b.length][b.length];
-        for(int x = 0; x < temp.length; x++){
-            if (temp[x].length >= 0) System.arraycopy(b[x], 0, temp[x], 0, temp[x].length);
-        }
+//        oldB = new Block[blocks.length];
+//        System.arraycopy(blocks,0,oldB,0,oldB.length);
+//        boolean[][] temp = new boolean[b.length][b.length];
+//        for(int x = 0; x < temp.length; x++){
+//            if (temp[x].length >= 0) System.arraycopy(b[x], 0, temp[x], 0, temp[x].length);
+//        }
 
         b = p.getFinalPiecePos();
         drawPiece(b, clicks, xPos);
         if(this.breaker){
-            p.setFinalPiecePos(temp);
+//            p.setFinalPiecePos(temp);
             breaker = false;
 
         }
@@ -134,4 +136,6 @@ public class PieceDrawer extends JPanel{
     public void setClicks(int clicks){this.clicks = clicks;}
 
     public void setXPos(int xPos) { this.xPos = xPos; }
+    public boolean getTurnFailed(){return turnFailed;}
+    public void setTurnFailed() { turnFailed = false; }
 }
