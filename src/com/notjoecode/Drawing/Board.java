@@ -8,6 +8,8 @@ public class Board extends JPanel {
     private int width, nextBoxHeight, nextBoxWidth, nextBoxPosition;
     //private int height;
 
+    boolean[][] boardState;
+
     public Board(int height){
 
         //this.height = height;
@@ -39,8 +41,6 @@ public class Board extends JPanel {
 
     }
 
-    public int getWidth(){
-        return width;
-    }
+    public int getWidth(){ return width; }
 
 }

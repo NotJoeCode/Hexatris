@@ -7,6 +7,7 @@ public class Block extends JPanel {
     private int size = Board.boxSize;
     private float[] position = new float[2];
     private int[] temp = new int[2];
+    private boolean freeze;
 
     public Block(int x, int y){
         this.position[0] = (float) x;
@@ -47,9 +48,13 @@ public class Block extends JPanel {
 
     public void update(){
         position[1]++;
+        if(position[1] > 26){
+            freeze = true;
+        }
     }
 
-    public float[] getPosition(){return position;}
+    public float[] getPosition() { return position; }
+    public boolean getFreeze() { return freeze; }
 //    public void setPosition(float[] f){position = f;}
 
 

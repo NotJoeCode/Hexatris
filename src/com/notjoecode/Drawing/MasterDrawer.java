@@ -13,9 +13,11 @@ public class MasterDrawer extends JPanel{
     private Board b;
     private PieceDrawer pD;
     //to set position post rotation
-    private int clicks;
+    private int clicks, nextPiece;
 
     public MasterDrawer(int height, Piece p){
+
+        nextPiece = p.getNextPiece();
         //drawing the grid and the next box
         this.b = new Board(height);
         //displays Pieces
@@ -41,21 +43,24 @@ public class MasterDrawer extends JPanel{
             int x = 0;
             while (x < pD.getBlocks().length) {
                 pD.getBlocks()[x].update();
+                if(pD.getBlocks()[x].getFreeze()){
+                    Piece p = new Piece(nextPiece);
+                    pD = new PieceDrawer(p);
+                    clicks = -1;
+                    pD.setXPos(0);
+                    break;
+                }
                 x++;
             }
             clicks++;
             repaint();
         }
     };
-    public void start(){
-        timer.scheduleAtFixedRate(t, 1000,1000);
-    }
+    public void start(){ timer.scheduleAtFixedRate(t, 1000,1000); }
 
 
     //getters and setters
-    public Board getBoard(){
-        return b;
-    }
+    public Board getBoard(){ return b; }
     public PieceDrawer getPieceDrawer() {return pD;}
     public int getClicks() { return clicks;}
     public void setClicks(int i) { this.clicks = i; }

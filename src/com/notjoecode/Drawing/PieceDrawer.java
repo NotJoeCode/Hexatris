@@ -20,9 +20,10 @@ public class PieceDrawer extends JPanel{
 
     public PieceDrawer(Piece p){
         blocks = new Block[6];
-        nextBlocks = p.getNextBlocks();
+        nextBlocks = new Block[6];
+        drawNextPiece(p.getNextBlockPositions());
         drawPiece(p.getFinalPiecePos(), 0, 0);
-        p.drawNextPiece(p.getNextBlockPositions());
+        drawNextPiece(p.getNextBlockPositions());
         //for rotations
         b = p.getBlockPositions();
 
@@ -65,6 +66,31 @@ public class PieceDrawer extends JPanel{
                 y++;
             }
             if(this.breaker) break;
+            y = 0;
+            x++;
+        }
+    }
+    private void drawNextPiece(boolean[][] array){
+        int x = 0, y = 0, z = 0;
+        while(x < array.length){
+            while(y < array[x].length){
+
+                if(array[x][y]){
+                    float positionX = x+16;
+                    if(!array[3][2] && !array[3][1] && !array[3][0]) {
+                        positionX += 1.5;
+                    }
+                    else if(!array[4][0] && ! array[4][1]){
+                        positionX += 1;
+                    }
+                    else if(!array[5][0]) {
+                        positionX += .5;
+                    }
+                    nextBlocks[z] = new Block(positionX,y);
+                    z++;
+                }
+                y++;
+            }
             y = 0;
             x++;
         }

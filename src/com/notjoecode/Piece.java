@@ -9,9 +9,6 @@ public class Piece {
     //added for rotation methods
     private boolean[][] finalPiecePos;
 
-    //private Block[] blocks = new Block[6],
-    private Block[] nextBlocks = new Block[6];
-
     private boolean[][] currentBlockPositions = new boolean[6][6], nextBlockPositions = new boolean[6][6];
     private Random random = new Random();
     private int thisPiece = random.nextInt(35);
@@ -20,9 +17,8 @@ public class Piece {
     private BitSet[] bitSets = { new BitSet(6), new BitSet(5), new BitSet(4)};
 
     public Piece(){
+
         setArray(thisPiece, currentBlockPositions);
-        //for testing purposes
-        //currentBlockPositions = turnPiece(currentBlockPositions);
         setArray(nextPiece, nextBlockPositions);
         resizeArray(currentBlockPositions);
 
@@ -31,37 +27,12 @@ public class Piece {
     //Piece testing
     public Piece(int x){
         thisPiece = x;
+        nextPiece = random.nextInt(35);
+
         setArray(thisPiece,currentBlockPositions);
         setArray(nextPiece, nextBlockPositions);
         resizeArray(currentBlockPositions);
 
-    }
-
-
-    public void drawNextPiece(boolean[][] array){
-        int x = 0, y = 0, z = 0;
-        while(x < array.length){
-            while(y < array[x].length){
-
-                if(array[x][y]){
-                    float positionX = x+16;
-                    if(!array[3][2] && !array[3][1] && !array[3][0]) {
-                        positionX += 1.5;
-                    }
-                    else if(!array[4][0] && ! array[4][1]){
-                        positionX += 1;
-                    }
-                    else if(!array[5][0]) {
-                        positionX += .5;
-                    }
-                    nextBlocks[z] = new Block(positionX,y);
-                    z++;
-                }
-                y++;
-            }
-            y = 0;
-            x++;
-        }
     }
 
     private void setArray(int x, boolean[][] blockPositions){
@@ -321,12 +292,10 @@ public class Piece {
 
     public boolean[][] getBlockPositions() { return currentBlockPositions; }
     public boolean[][] getNextBlockPositions() { return nextBlockPositions; }
-//    public int getThisPiece(){ return thisPiece; }
-//    public void setThisPiece(){ thisPiece = nextPiece; }
-//    public int getNextPiece(){ return nextPiece; }
-//    public void setNextPiece(){nextPiece = random.nextInt(35);}
-    //public Block[] getBlocks(){return blocks;}
-    public Block[] getNextBlocks(){return nextBlocks;}
+    public int getThisPiece(){ return thisPiece; }
+    public void setThisPiece(){ thisPiece = nextPiece; }
+    public int getNextPiece(){ return nextPiece; }
+    public void setNextPiece(){nextPiece = random.nextInt(35);}
     public boolean[][] getFinalPiecePos() { return finalPiecePos;}
     public void setFinalPiecePos(boolean[][] temp) { finalPiecePos = temp; }
 }

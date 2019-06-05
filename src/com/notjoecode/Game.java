@@ -84,6 +84,10 @@ public class Game extends JFrame implements KeyListener {
 
         }
 
+        //move the piece down
+        if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN){
+
+        }
         //for testing. put the piece at the top of the screen
         if(e.getKeyCode()==KeyEvent.VK_L){
             mD.getPieceDrawer().resetPiecePos(p);
