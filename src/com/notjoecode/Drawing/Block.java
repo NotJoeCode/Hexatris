@@ -46,7 +46,11 @@ public class Block extends JPanel {
     }
 
 
-    public void update(){
+    public void update(boolean[][] boardState){
+        if(boardState[(int) position[0]][(int) position[1] + 2]){
+            freeze = true;
+        }
+
         position[1]++;
         if(position[1] > 26){
             freeze = true;

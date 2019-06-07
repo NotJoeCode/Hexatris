@@ -8,7 +8,7 @@ public class Board extends JPanel {
     private int width, nextBoxHeight, nextBoxWidth, nextBoxPosition;
     //private int height;
 
-    boolean[][] boardState;
+    private boolean[][] boardState = new boolean[16][34];
 
     public Board(int height){
 
@@ -41,6 +41,12 @@ public class Board extends JPanel {
 
     }
 
-    public int getWidth(){ return width; }
+    public void setBoardState(Block[] blocks){
+        for (Block block : blocks) {
+            boardState[(int) block.getPosition()[0]][(int) block.getPosition()[1]] = true;
+        }
+    }
 
+    public int getWidth(){ return width; }
+    public boolean[][] getBoardState() { return boardState; }
 }

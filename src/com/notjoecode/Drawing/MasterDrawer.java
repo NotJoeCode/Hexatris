@@ -42,8 +42,9 @@ public class MasterDrawer extends JPanel{
         public void run() {
             int x = 0;
             while (x < pD.getBlocks().length) {
-                pD.getBlocks()[x].update();
+                pD.getBlocks()[x].update(b.getBoardState());
                 if(pD.getBlocks()[x].getFreeze()){
+                    b.setBoardState(pD.getBlocks());
                     Piece p = new Piece(nextPiece);
                     pD = new PieceDrawer(p);
                     clicks = -1;
