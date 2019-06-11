@@ -12,10 +12,15 @@ public class MasterDrawer extends JPanel{
     private Timer timer = new Timer();
     private Board b;
     private PieceDrawer pD;
+    private Piece p;
+    private int xPos = 0;
+
     //to set position post rotation
     private int clicks, nextPiece;
 
-    public MasterDrawer(int height, Piece p){
+    public MasterDrawer(int height){
+
+        p = new Piece();
 
         nextPiece = p.getNextPiece();
         //drawing the grid and the next box
@@ -44,8 +49,22 @@ public class MasterDrawer extends JPanel{
             while (x < pD.getBlocks().length) {
                 pD.getBlocks()[x].update(b.getBoardState());
                 if(pD.getBlocks()[x].getFreeze()){
+                    //x--;
+                    while(x >= 0){
+
+                        pD.getBlocks()[x].revert();
+                        x--;
+                    }
                     b.setBoardState(pD.getBlocks());
-                    Piece p = new Piece(nextPiece);
+                    for(Block block : b.getAL()){
+                        block.repaint();
+                    }
+                    b.repaint();
+
+                    p = new Piece(nextPiece);
+                    xPos = 0;
+
+                    nextPiece = p.getNextPiece();
                     pD = new PieceDrawer(p);
                     clicks = -1;
                     pD.setXPos(0);
@@ -57,7 +76,7 @@ public class MasterDrawer extends JPanel{
             repaint();
         }
     };
-    public void start(){ timer.scheduleAtFixedRate(t, 1000,1000); }
+    public void start(){ timer.scheduleAtFixedRate(t, 200,200); }
 
 
     //getters and setters
@@ -65,4 +84,13 @@ public class MasterDrawer extends JPanel{
     public PieceDrawer getPieceDrawer() {return pD;}
     public int getClicks() { return clicks;}
     public void setClicks(int i) { this.clicks = i; }
+    public void downButton(){
+        this.clicks++;
+        pD.repaint();
+        this.repaint();
+    }
+    public Piece getP(){ return p; }
+    public int getxPos(){return xPos;}
+    public void rightOne(){xPos++;}
+    public void leftOne(){xPos--;}
 }

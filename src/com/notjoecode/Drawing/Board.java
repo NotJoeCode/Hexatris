@@ -2,6 +2,8 @@ package com.notjoecode.Drawing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class Board extends JPanel {
     public static int boxSize;
@@ -9,6 +11,7 @@ public class Board extends JPanel {
     //private int height;
 
     private boolean[][] boardState = new boolean[16][34];
+    private ArrayList<Block> ocpSpaces = new ArrayList<>();
 
     public Board(int height){
 
@@ -37,16 +40,28 @@ public class Board extends JPanel {
         g.setColor(Color.BLACK);
         //g.drawRect(boxSize, boxSize, (height )/2, height - (4 * boxSize));
         g.drawRect(boxSize,boxSize,boxSize*15,boxSize*27);
+
         g.drawRect(nextBoxPosition+boxSize, boxSize, nextBoxWidth, nextBoxHeight);
+        for(Block b: ocpSpaces){
+            b.paintComponent(g);
+        }
 
     }
 
     public void setBoardState(Block[] blocks){
         for (Block block : blocks) {
-            boardState[(int) block.getPosition()[0]][(int) block.getPosition()[1]] = true;
+            boardState[(int) block.getPosition()[0]][(int) block.getPosition()[1]+6] = true;
+        }
+        for(int x = 0; x < boardState.length; x++) {
+            for (int y = 0; y < boardState[x].length; y++) {
+                if(boardState[x][y]){
+                    ocpSpaces.add(new Block(x, y-6));
+                }
+            }
         }
     }
 
     public int getWidth(){ return width; }
     public boolean[][] getBoardState() { return boardState; }
+    public ArrayList<Block> getAL(){ return ocpSpaces; }
 }

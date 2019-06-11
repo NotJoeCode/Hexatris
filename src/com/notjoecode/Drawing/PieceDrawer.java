@@ -17,7 +17,8 @@ public class PieceDrawer extends JPanel{
     private boolean breaker = false;
     private boolean turnFailed = false;
 
-    private Block[] blocks, nextBlocks, oldB;
+    private Block[] blocks, nextBlocks;
+            //, oldB;
 
     public PieceDrawer(Piece p){
         blocks = new Block[6];

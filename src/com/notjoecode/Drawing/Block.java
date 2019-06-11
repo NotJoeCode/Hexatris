@@ -7,7 +7,7 @@ public class Block extends JPanel {
     private int size = Board.boxSize;
     private float[] position = new float[2];
     private int[] temp = new int[2];
-    private boolean freeze;
+    private boolean freeze, undo;
 
     public Block(int x, int y){
         this.position[0] = (float) x;
@@ -20,10 +20,18 @@ public class Block extends JPanel {
         this.position[1] = (float) y;
     }
 
-    public void moveRight(){
+    public void moveRight(boolean[][] boardState){
         position[0]++;
+        if(position[0] > 15 || boardState[(int) position[0]][(int) position[1]+6]){
+            undo = true;
+        }
     }
-    public void moveLeft(){ position[0]--; }
+    public void moveLeft(boolean[][] boardState){
+        position[0]--;
+        if(position[0] < 0 || boardState[(int) position[0]][(int) position[1]+6]){
+            undo = true;
+        }
+    }
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -47,7 +55,7 @@ public class Block extends JPanel {
 
 
     public void update(boolean[][] boardState){
-        if(boardState[(int) position[0]][(int) position[1] + 2]){
+        if(boardState[(int) position[0]][(int) position[1] + 7]){
             freeze = true;
         }
 
@@ -56,9 +64,12 @@ public class Block extends JPanel {
             freeze = true;
         }
     }
+    public void revert(){position[1]--;}
 
     public float[] getPosition() { return position; }
     public boolean getFreeze() { return freeze; }
+    public boolean getUndo() { return undo; }
+    public void setUndo() { undo = false; }
 //    public void setPosition(float[] f){position = f;}
 
 
