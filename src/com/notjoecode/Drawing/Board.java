@@ -42,6 +42,7 @@ public class Board extends JPanel {
         g.drawRect(boxSize,boxSize,boxSize*15,boxSize*27);
 
         g.drawRect(nextBoxPosition+boxSize, boxSize, nextBoxWidth, nextBoxHeight);
+        //concurrent Modification exception
         for(Block b: ocpSpaces){
             b.paintComponent(g);
         }
