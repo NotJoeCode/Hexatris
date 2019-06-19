@@ -25,6 +25,12 @@ public class Game extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            mD.getBoard().setStart();
+            mD.start();
+
+        }
+
         //move piece left
         if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
             for (int x = 0; x < mD.getPieceDrawer().getBlocks().length; x++) {

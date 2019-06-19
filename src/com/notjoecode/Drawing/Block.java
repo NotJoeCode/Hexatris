@@ -22,13 +22,13 @@ public class Block extends JPanel {
 
     public void moveRight(boolean[][] boardState){
         position[0]++;
-        if(position[0] > 15 || boardState[(int) position[0]][(int) position[1]+6]){
+        if(position[0] > 15 || boardState[(int) position[1] + 6][(int) position[0] - 1]){
             undo = true;
         }
     }
     public void moveLeft(boolean[][] boardState){
         position[0]--;
-        if(position[0] < 0 || boardState[(int) position[0]][(int) position[1]+6]){
+        if(position[0] < 0 || boardState[(int) position[1]+6][(int) position[0]]){
             undo = true;
         }
     }
@@ -55,7 +55,7 @@ public class Block extends JPanel {
 
 
     public void update(boolean[][] boardState){
-        if(boardState[(int) position[0]][(int) position[1] + 7]){
+        if(boardState[(int) position[1] + 7][(int) position[0]]){
             freeze = true;
         }
 

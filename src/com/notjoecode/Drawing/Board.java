@@ -9,9 +9,14 @@ public class Board extends JPanel {
     public static int boxSize;
     private int width, nextBoxHeight, nextBoxWidth, nextBoxPosition;
     //private int height;
+    private int points = 0;
 
-    private boolean[][] boardState = new boolean[16][34];
+    //34 high by 16 wide (y,x)
+    private boolean[][] boardState = new boolean[34][15];
     private ArrayList<Block> ocpSpaces = new ArrayList<>();
+    private boolean lineCleared;
+
+    private String start = "Press Space to Start";
 
     public Board(int height){
 
@@ -28,6 +33,8 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
+        g.drawString(start, nextBoxWidth, nextBoxWidth);
+        g.drawString(Integer.toString(points), width - (boxSize*3)/2, nextBoxHeight + boxSize*2);
         g.setColor(Color.LIGHT_GRAY);
         //set the vertical lines | | | |
         for(int x = 14; x != 0; x-- ) {
@@ -47,22 +54,57 @@ public class Board extends JPanel {
             b.paintComponent(g);
         }
 
+
     }
 
     public void setBoardState(Block[] blocks){
         for (Block block : blocks) {
-            boardState[(int) block.getPosition()[0]][(int) block.getPosition()[1]+6] = true;
+            boardState[(int) block.getPosition()[1]+6][(int) block.getPosition()[0]] = true;
         }
+        checkRow();
         for(int x = 0; x < boardState.length; x++) {
             for (int y = 0; y < boardState[x].length; y++) {
                 if(boardState[x][y]){
-                    ocpSpaces.add(new Block(x, y-6));
+                    ArrayList<Block> temp = new ArrayList<>();
+                    temp.add(new Block(y, x-6));
+                    ocpSpaces.addAll(temp);
                 }
             }
+        }
+    }
+
+    private void checkRow(){
+        int y = 0;
+        boolean clearRow = true;
+        while(y<boardState.length) {
+            for (boolean b : boardState[y]) {
+                if (!b) {
+                    clearRow = false;
+                    y++;
+                    break;
+                }
+            }
+            if(clearRow){
+                points++;
+                for(int z = y; z > 0; z--){
+                    for(int x = 0; x < boardState[z].length; x++){
+                        boardState[z][x] = boardState[z-1][x];
+                    }
+                }
+                ocpSpaces.clear();
+//                for(Block b: ocpSpaces){
+//                    if(b.getPosition()[1] == y){
+//                        ocpSpaces.remove(b);
+//                    }
+//                }
+                y--;
+            }
+            clearRow = true;
         }
     }
 
     public int getWidth(){ return width; }
     public boolean[][] getBoardState() { return boardState; }
     public ArrayList<Block> getAL(){ return ocpSpaces; }
+    public void setStart(){start = "";}
 }
